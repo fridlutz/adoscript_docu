@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+{%- include head.html -%}
+<body>
+	<header>
+		<nav class="z-depth-0 adoscript_nav	">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">{{ page.title | escape }}</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+				</ul>
+			</div>
+		</nav>
+		<ul id="slide-out"
+			class="sidenav sidenav-fixed z-depth-0 adoscript_sidenav">
+		<li class="logo"><a id="logo-container" href="/" class="brand-logo">
+            <object id="front-page-logo" type="image/png" data="{{ "/assets/images/adoxx_logo.png" | relative_url }}">Your browser does not support SVG</object></a></li>
+		<!-- <li class="version"><a href="#" data-target="version-dropdown" class="dropdown-trigger">
+            ADOxx 1.5
+            <svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a><ul id="version-dropdown" class="dropdown-content" tabindex="0">
+            <li tabindex="0"><a>ADOxx 1.3</a></li>
+            <li tabindex="0"><a>ADOxx 1.5</a></li>
+            <li tabindex="0"><a href="#">ADOxx 1.7</a></li>
+          </ul>
+          
+        </li>	 -->		
+			
+        <li class="search">
+          	  <div id="search-searchbar"></div>
+        </li>
+        <li class="divider"></li>
+        
+		</ul>
+		<a href="#" data-target="slide-out" class="sidenav-trigger adoscript_menu_trigger" ><i
+			class="material-icons adoscript_menu_open">menu</i></a>
+	</header>
+
+	<main>
+	<div class="container adoscript_container">
+	
+	
+<div id="search-hits-container" class="callout">
+<div class="search-result-header">Search results <div id="stats-container"></div></div>
+  <div id="search-hits"></div>
+</div>
+
+
+{% if page.tags != null %}
+  {%- assign sorted_tags = page.tags | sort:"value" | reverse -%}
+  {% for tag in sorted_tags %}
+    <span class="new badge grey" data-badge-caption="ADOxx {{ tag }}"></span>
+  {% endfor %}
+{% endif %}
+
+	
+	
+	
+	{{ content }}</div>
+	
+	
+	
+	</main>
+
+
+
+
+	{%- include footer.html -%}
+	<script type="text/javascript"
+		src="{{ "/assets/jquery/jquery-3.3.1.min.js" | relative_url }}">
+	</script>
+	{% include algolia.html %}
+	<script type="text/javascript" src="{{ "/assets/materialize/js/materialize.js" | relative_url }}"></script>
+	<script type="text/javascript" src="/sidebar.js"></script>
+	
+	
+	<script type="text/javascript">
+	
+	
+		$(document).ready(function() {
+				
+			function getNestedChildren(arr, parent) {
+			    var out = []
+			    for(var i in arr) {
+			        if(arr[i].parent == parent) {
+			            var children = getNestedChildren(arr, arr[i].id)
+
+			            if(children.length) {
+			                arr[i].children = children
+			            }
+			            out.push(arr[i])
+			        }
+			    }
+			    return out
+			}
+			
+			function getHTMLTree ( a, str ) {
+				//sort by folder, files first, then folders
+				a.sort(function(x, y) {
+					var xType = x.isFolder;
+					var yType = y.isFolder; 
+			        // true values first
+			        //return (xType === yType)? 0 : xType? -1 : 1;
+			        // false values first
+			        return (xType === yType)? 0 : xType? 1 : -1;
+			    });
+			    for (var i = 0; i < a.length; i++) {	
+			        //this is a folder, as there are children: FIXME: could also be done through isFolder property
+			        if (a[i].children && a[i].children.length) {
+			        	var cssActive = "";
+			        	var iconClass = "keyboard_arrow_right";
+			        	if (localStorage.getItem(a[i].url)) {
+			        		cssActive = "active";
+			        		iconClass = "keyboard_arrow_down";
+			        	}
+			        	str += '<li class="no-padding"><ul class="collapsible collapsible-accordion"><li class="folder '+cssActive+'" id="'+a[i].url+'"><a class="collapsible-header waves-effect">'+a[i].title+'<i class="material-icons">'+iconClass+'</i></a><div class="collapsible-body"><ul>';
+			        	str += getHTMLTree( a[i].children, '');
+			        	str += '</ul></div></li></ul></li>';			        	
+			        }
+			        //this is a file part
+			        else {
+			        	if (a[i].url == '{{ page.url}}') {
+				            str += '<li class="active"><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+							
+			        	}
+			        	else {
+				            str += '<li><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+
+			        	}
+			        }
+			    }
+			    return str;
+			}
+			
+			//sort the folder in hierarchical tree, starting from sublevel /docs
+			var hierarchicalFolders = getNestedChildren(sidebar, "/docs");			
+			$(".sidenav").append(getHTMLTree( hierarchicalFolders, ''));
+			
+			
+			function openFolder () {
+				//change the icon
+				this.el.childNodes["0"].childNodes["0"].childNodes[1].innerHTML="keyboard_arrow_down";
+				//store state open in localStorage
+				//console.log(this.el.children["0"].getAttribute('id'));
+				localStorage.setItem(this.el.children["0"].getAttribute('id'), true);
+			}
+			
+			function closeFolder () {
+				//change the icon
+				this.el.childNodes["0"].childNodes["0"].childNodes[1].innerHTML="keyboard_arrow_right";
+				localStorage.removeItem(this.el.children["0"].getAttribute('id'));
+
+			}
+			//this opens all folders
+			var openElement = $("a[href$='{{ page.url}}']")
+			var parentElementsLI = openElement.parents('li.folder');
+			parentElementsLI.addClass("active");
+	
+			
+			//change the handle for each icon
+			parentElementsLI.each(function( index ) {
+			  $(this).children("a.collapsible-header").children("i.material-icons").html ("keyboard_arrow_down");
+			});
+			
+
+			
+			$('.sidenav').sidenav();
+			$('.dropdown-trigger').dropdown();
+			$('.collapsible').collapsible({
+				onOpenStart : openFolder,
+				onCloseStart : closeFolder
+		    });
+			$('a.adoscript_docu').click(function() {
+			  //replaced, not required
+			});
+			
+			//scroll to position
+			var screenPosition = openElement.get( 0 ).getBoundingClientRect();
+			$('.sidenav').scrollTop(screenPosition.top-300);
+		});
+	</script>
+    <script src="{{ "/assets/prism/prism.js" | relative_url }}"></script>
+  
+	
+</body>
+
+</html>

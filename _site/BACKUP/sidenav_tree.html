@@ -1,0 +1,26 @@
+{% if menu %}
+<ul>
+{% for item in menu %}
+    {% if item.children %}
+    <!-- this is a folder menu -> it does not react to change yet, only expands the tree -->
+    <li class="no-padding">
+			<ul class="collapsible collapsible-accordion">
+				<li><a class="waves-effect collapsible-header">{{ item.title | escape }}<i class="material-icons">arrow_drop_down</i></a>
+					<div class="collapsible-body">
+                      {% assign menu = item.children %}
+                      {% include sidenav_tree.html %}
+                    </div>
+                 </li>
+             </ul>
+       </li>  
+    {% else %}
+       {% if item.url == page.url %}
+         <li class="active"><a class="waves-effect" href="{{ item.url | relative_url }}">{{ item.title | escape }}</a></li>            
+       {% else %}
+         <li><a class="waves-effect" href="{{ item.url | relative_url }}">{{ item.title | escape }}</a></li>   
+       {% endif%}
+           
+    {% endif %}
+{% endfor %}
+</ul>
+{% endif %}

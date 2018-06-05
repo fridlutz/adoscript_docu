@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+  
+     <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css"><!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/assets/materialize/css/materialize.min.css" media="screen,projection"><!--Import custom css including overrides -->
+    <link type="text/css" rel="stylesheet" href="/assets/css/custom.css" media="screen,projection"><!--Let browser know website is optimized for mobile-->
+    <link type="text/css" rel="stylesheet" href="/assets/css/custom_callout.css" media="screen,projection"><!--Let browser know website is optimized for mobile-->
+
+    <link href="/assets/prism/prism.css" rel="stylesheet" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <!--<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" />--></head>
+<body>
+	<header>
+		<nav class="z-depth-0 adoscript_nav	">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">TLB_CREATE</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+				</ul>
+			</div>
+		</nav>
+		<ul id="slide-out"
+			class="sidenav sidenav-fixed z-depth-0 adoscript_sidenav">
+		<li class="logo"><a id="logo-container" href="/" class="brand-logo">
+            <object id="front-page-logo" type="image/png" data="/assets/images/adoxx_logo.png">Your browser does not support SVG</object></a></li>
+		<!-- <li class="version"><a href="#" data-target="version-dropdown" class="dropdown-trigger">
+            ADOxx 1.5
+            <svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a><ul id="version-dropdown" class="dropdown-content" tabindex="0">
+            <li tabindex="0"><a>ADOxx 1.3</a></li>
+            <li tabindex="0"><a>ADOxx 1.5</a></li>
+            <li tabindex="0"><a href="#">ADOxx 1.7</a></li>
+          </ul>
+          
+        </li>	 -->		
+			
+        <li class="search">
+          	  <div id="search-searchbar"></div>
+        </li>
+        <li class="divider"></li>
+        
+		</ul>
+		<a href="#" data-target="slide-out" class="sidenav-trigger adoscript_menu_trigger" ><i
+			class="material-icons adoscript_menu_open">menu</i></a>
+	</header>
+
+	<main>
+	<div class="container adoscript_container">
+	
+	
+<div id="search-hits-container" class="callout">
+<div class="search-result-header">Search results <div id="stats-container"></div></div>
+  <div id="search-hits"></div>
+</div>
+
+
+
+    <span class="new badge grey" data-badge-caption="ADOxx 1.5"></span>
+  
+    <span class="new badge grey" data-badge-caption="ADOxx 1.3"></span>
+  
+
+
+	
+	
+	
+	<p>This command creates a new internal TreeListBox but does not show it yet. To show the dialog, you have to call TLB_SHOW afterwards.</p>
+
+<h1 id="syntax">Syntax:</h1>
+
+<pre class="line-numbers"><code class="language-adoscript">
+CC "AdoScript" TLB_CREATE	title:strValue
+							[ oktext:strValue ] [ canceltext:strValue ]
+							[ boxtext:strValue ] [ button-w:intValue ]
+							[ no-cancel:intValue ] [ no-help:intValue ]
+							[ x:intValue ] [ y:intValue ]
+							[ w:intValue ] [ h:intValue ]
+							[ sizeable:boolValue ]
+							[ max-w:intValue ] [ max-h:intValue ]
+							[ min-w:intValue ] [ min-h:intValue ]
+							[ searchable:intValue ] [ sorted:intValue ]
+							[ flat:intValue ] [ columns:intValue ]
+							[ multi-sel:intValue ] [ no-child-sel:intValue ]
+							[ no-parent-sel:intValue ]
+							[ checklistbox:intValue ]
+							[ setdblclick:intValue ]
+							[ okbutton-enabled:intValue ]
+							[ parentid:intValue ] [ is-parent:boolValue ]
+							[ bitmap:strValue ] [ bitmap2:strValue ]
+
+  # --&gt;RESULT ecode:intValue .
+
+</code></pre>
+
+<h1 id="parameters">Parameters:</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">title</code></td>
+      <td>strValue, specifies the title of the dialog.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">oktext</code></td>
+      <td>strValue, specifies the text for the OK-Button. Default is “OK”.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">canceltext</code></td>
+      <td>strValue, specifies the text for the Cancel-Button. Default is “Abbrechen” or “Cancel” (depending on the language of your OS).</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">boxtext</code></td>
+      <td>strValue, specifies the title text for the TreeListBox (the text which is displayed above the upper left corner of the TLB).</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">button-w</code></td>
+      <td>intValue, specifies the width of the buttons (in logical/appfont coordinates).</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">no-cancel</code></td>
+      <td>intValue, specifies that no Cancel-Button should be displayed, if the value is 1.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">no-help</code></td>
+      <td>intValue, specifies that no Help-Button should be displayes if the value is 1.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">x</code></td>
+      <td>intValue, specifies the startup x position of the dialog (in logical/appfont coordinates, relative to the parent window). Must be used together with parameter y.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">y</code></td>
+      <td>intValue, specifies the startup y position of the dialog (in logical/appfont coordinates, relative to the parent window). Must be used together with parameter x.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">w</code></td>
+      <td>intValue, specifies the startup width of the dialog (in logical/appfont coordinates). Must be used together with parameter h.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">h</code></td>
+      <td>intValue, specifies the startup height of the dialog (in logical/appfont coordinates). Must be used together with parameter w.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">sizeable</code></td>
+      <td>boolValue, has to be set to 0 if the dialog shall be of fixed size. The default value is 1, which means that the dialog is sizeable.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">max-w</code></td>
+      <td>intValue, specifies the maximum width to which the user can resize the dialog (in logical/appfont coordinates). Must be used together with parameter max-h.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">max-h</code></td>
+      <td>intValue, specifies the maximum height to which the user can resize the dialog (in logical/appfont coordinates). Must be used together with parameter max-w.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">min-w</code></td>
+      <td>intValue, specifies the minimum width to which the user can resize the dialog (in logical/appfont coordinates). Must be used together with parameter min-h.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">min-h</code></td>
+      <td>intValue, specifies the minimum height to which the user can resize the dialog (in logical/appfont coordinates). Must be used together with parameter min-w.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">searchable</code></td>
+      <td>intValue, specifies that the user can search the entries of the TreeListBox via a popup menu entry if the value is 1.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">sorted</code></td>
+      <td>intValue, specifies that the entries in the TreeListBox are sorted alphabetically if the value is 1.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">flat</code></td>
+      <td>intValue, specifies that a TreeListBox cannot have any child entries if the value is 1.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">columns</code></td>
+      <td>intValue, specifies the number of columns the TLB has. The default values is 1. The maximum number of columns is 16.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">multi-sel</code></td>
+      <td>intValue, specifies that the user can select more than 1 entry by using Ctrl or Shift.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">no-child-sel</code></td>
+      <td>intValue, specifies that the user cannot select any child entries.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">no-parent-sel</code></td>
+      <td>intValue, specifies that the user cannot select any parent entries.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">checklistbox</code></td>
+      <td>intValue, specifies that it will be a flat list with checkboxes on the left side.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">setdblclick</code></td>
+      <td>intValue, specifies that if the user double clicks an item the dialog is closed with endbutton = “OK”.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">okbutton-enabled</code></td>
+      <td>intValue, specifies the initial ok button state (enabled or not). This is of course only true, if after TLB_CREATE no select command is called, before showing the TreeListBox. Default is to have the ok button disabled (if initially nothing is selected). Use okbutton-enabled:1 to allow clicking on the ok button without any selection made.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">parentid</code></td>
+      <td>intValue</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">is-parent</code></td>
+      <td>boolValue</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">bitmap</code></td>
+      <td>strValue</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">bitmap2</code></td>
+      <td>strValue</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="returns">Returns:</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">ecode</code></td>
+      <td>intValue, as follows 0 = no error occured, 1 = user canceled dialog, 2 = you have to call TLB_CREATE before calling this function, 3 = an argument is missing, 4 = you passed an invalid ID</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="remarks">Remarks:</h1>
+
+<p>If you use searchable:1 the flag checklistbox is ignored<br />
+If you use checklistbox:1 the flags multi-sel, no-child-sel, no-parent-sel, sorted, flat and searchable are ignored. It is always flat, NOT sorted, NOT searchable and you can select all entries!</p>
+
+<p>If you use TLB_CREATE and TLB_SHOW in conjunction with MSGWIN, take care to avoid the following order of AdoScript commands,<br />
+as this will crash the ADOxx Modelling Toolkit</p>
+
+<ol>
+  <li>MSGWIN</li>
+  <li>TLB_CREATE</li>
+  <li>MSGWIN hide</li>
+  <li>TLB_SHOW</li>
+</ol>
+
+<p>The crash occurs as the parent of the TreeListBox (MSGWIN) does not exist anymore when the TreeListBox is shown.</p>
+
+<h1 id="see-also">See Also:</h1>
+
+<p><a href="tlb_add_button.html" title="TLB_ADD_BUTTON">TLB_ADD_BUTTON</a><br />
+<a href="tlb_expand.html" title="TLB_EXPAND">TLB_EXPAND</a><br />
+<a href="tlb_expand_all.html" title="TLB_EXPAND_ALL">TLB_EXPAND_ALL</a><br />
+<a href="tlb_expand_to.html" title="TLB_EXPAND_TO">TLB_EXPAND_TO</a><br />
+<a href="tlb_insert.html" title="TLB_INSERT">TLB_INSERT</a><br />
+<a href="tlb_remove.html" title="TLB_REMOVE">TLB_REMOVE</a><br />
+<a href="tlb_select.html" title="TLB_SELECT">TLB_SELECT</a><br />
+<a href="tlb_select_all.html" title="TLB_SELECT_ALL">TLB_SELECT_ALL</a><br />
+<a href="tlb_show.html" title="TLB_SHOW">TLB_SHOW</a></p>
+
+<p>Example 1:</p>
+
+<pre class="line-numbers"><code class="language-adoscript">
+
+# create the main TreeListBox with all its parameters
+CC "AdoScript" TLB_CREATE title:"My title" oktext:"Close" canceltext:"No way!"
+        boxtext:"These are my entries" no-help:1 button-w:60
+        max-w:500 max-h:367 min-w:200 min-h:150 checklistbox:1
+
+# insert some entries (as you like - ID should be unique)
+CC "AdoScript" TLB_INSERT id:1 text:"Do this"
+CC "AdoScript" TLB_INSERT id:2 text:"Do that"
+
+# select the first entry (here: check it)
+CC "AdoScript" TLB_SELECT id:1 select:1
+
+# and finally show it
+CC "AdoScript" TLB_SHOW
+IF (ecode = 0) {
+    CC "AdoScript" INFOBOX ("Selected ids: " + selectedids + "\n" +
+                            "You pushed the following button: " + endbutton)
+} ELSE {
+    CC "AdoScript" INFOBOX ("You cancelled the dialog!")
+}
+
+
+</code></pre>
+
+
+</div>
+	
+	
+	
+	</main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">Your awesome title</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div> -->
+
+  </div>
+
+</footer>
+<script type="text/javascript"
+		src="/assets/jquery/jquery-3.3.1.min.js">
+	</script>
+	<!-- Including InstantSearch.js library and styling -->
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
+<!-- load custom search styles -->
+<link type="text/css" rel="stylesheet" href="/assets/css/custom_search.css" media="screen,projection">
+
+<script>
+// Instanciating InstantSearch.js with Algolia credentials
+const search = instantsearch({
+  appId: 'QOEMVL4S23',
+  indexName: 'adoscript_api_docu',
+  apiKey: '5186f57e5a3ae3be1ee2d0a0d99335cb',
+  searchFunction: function(helper) {
+	    var searchResults = $('#search-hits');
+	    var searchResultContainer = $('#search-hits-container');
+	    if (helper.state.query === '') {
+	      // empty query string -> hide the search results & abort the search
+	      searchResults.hide();
+	      searchResultContainer.hide();
+	      return;
+	    }
+	    // perform the regular search & display the search results
+	    helper.search();
+	    searchResults.show();
+	    searchResultContainer.show();
+	  }
+});
+
+// Adding searchbar and results widgets
+search.addWidget(
+  instantsearch.widgets.searchBox({
+    container: '#search-searchbar',
+    placeholder: 'Search documentation...',
+    poweredBy: true, // This is required if you're on the free Community plan
+    reset : true,
+    cssClasses: {
+        root: 'adoscript_searchbox',
+        input: 'adoscript_search_input',
+      }
+  })
+);
+search.addWidget(
+  instantsearch.widgets.hits({
+    container: '#search-hits',
+    templates: {
+        item: function(hit) {
+          if (hit._highlightResult.title && hit._highlightResult.content) {
+            const content = hit._highlightResult.content.value;
+            const title = hit._highlightResult.title.value;
+            var version_html = "";
+            var tags = hit.tags;
+            tags.sort(function(x, y) {
+            	return (x < y) ? 1 : (x > y) ? -1 : 0;
+		    });
+            for (var i = 0; i < tags.length; i++) {
+                version_html+='<span class="adoscript_version new badge grey" style="font-size: 0.6em;" data-badge-caption="ADOxx '+hit.tags[i]+'"></span>';
+            }
+            return `
+              <bold><a class="adoscript_hit_title" href="${hit.url}">${title}</a>${version_html}</bold>
+              <p class="adoscript_hit_content">${content}</p>
+              <p class="adoscript_type">Type: ${hit.categories[0]}</p>
+            `;
+          }
+        }
+      },
+      cssClasses: {
+          root: 'collection',
+          item: 'collection-item',
+          empty: 'collection-item'
+        }
+  })
+);
+search.addWidget(
+		  instantsearch.widgets.stats({
+		    container: '#stats-container'
+		  })
+		);
+
+// Starting the search
+search.start();
+
+$('.ais-search-box--reset').on('click tap', function() {
+	$('.ais-search-box--input')
+    .val('')
+    .focus()
+    .trigger({ type: 'keypress', which: 13 });
+	search.helper.setQuery('').search();
+});
+
+</script>
+
+	<script type="text/javascript" src="/assets/materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="/sidebar.js"></script>
+	
+	
+	<script type="text/javascript">
+	
+	
+		$(document).ready(function() {
+				
+			function getNestedChildren(arr, parent) {
+			    var out = []
+			    for(var i in arr) {
+			        if(arr[i].parent == parent) {
+			            var children = getNestedChildren(arr, arr[i].id)
+
+			            if(children.length) {
+			                arr[i].children = children
+			            }
+			            out.push(arr[i])
+			        }
+			    }
+			    return out
+			}
+			
+			function getHTMLTree ( a, str ) {
+				//sort by folder, files first, then folders
+				a.sort(function(x, y) {
+					var xType = x.isFolder;
+					var yType = y.isFolder; 
+			        // true values first
+			        //return (xType === yType)? 0 : xType? -1 : 1;
+			        // false values first
+			        return (xType === yType)? 0 : xType? 1 : -1;
+			    });
+			    for (var i = 0; i < a.length; i++) {	
+			        //this is a folder, as there are children: FIXME: could also be done through isFolder property
+			        if (a[i].children && a[i].children.length) {
+			        	var cssActive = "";
+			        	var iconClass = "keyboard_arrow_right";
+			        	if (localStorage.getItem(a[i].url)) {
+			        		cssActive = "active";
+			        		iconClass = "keyboard_arrow_down";
+			        	}
+			        	str += '<li class="no-padding"><ul class="collapsible collapsible-accordion"><li class="folder '+cssActive+'" id="'+a[i].url+'"><a class="collapsible-header waves-effect">'+a[i].title+'<i class="material-icons">'+iconClass+'</i></a><div class="collapsible-body"><ul>';
+			        	str += getHTMLTree( a[i].children, '');
+			        	str += '</ul></div></li></ul></li>';			        	
+			        }
+			        //this is a file part
+			        else {
+			        	if (a[i].url == '/docs/message_ports/ui_apis/adoscript/tlb_create.html') {
+				            str += '<li class="active"><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+							
+			        	}
+			        	else {
+				            str += '<li><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+
+			        	}
+			        }
+			    }
+			    return str;
+			}
+			
+			//sort the folder in hierarchical tree, starting from sublevel /docs
+			var hierarchicalFolders = getNestedChildren(sidebar, "/docs");			
+			$(".sidenav").append(getHTMLTree( hierarchicalFolders, ''));
+			
+			
+			function openFolder () {
+				//change the icon
+				this.el.childNodes["0"].childNodes["0"].childNodes[1].innerHTML="keyboard_arrow_down";
+				//store state open in localStorage
+				//console.log(this.el.children["0"].getAttribute('id'));
+				localStorage.setItem(this.el.children["0"].getAttribute('id'), true);
+			}
+			
+			function closeFolder () {
+				//change the icon
+				this.el.childNodes["0"].childNodes["0"].childNodes[1].innerHTML="keyboard_arrow_right";
+				localStorage.removeItem(this.el.children["0"].getAttribute('id'));
+
+			}
+			//this opens all folders
+			var openElement = $("a[href$='/docs/message_ports/ui_apis/adoscript/tlb_create.html']")
+			var parentElementsLI = openElement.parents('li.folder');
+			parentElementsLI.addClass("active");
+	
+			
+			//change the handle for each icon
+			parentElementsLI.each(function( index ) {
+			  $(this).children("a.collapsible-header").children("i.material-icons").html ("keyboard_arrow_down");
+			});
+			
+
+			
+			$('.sidenav').sidenav();
+			$('.dropdown-trigger').dropdown();
+			$('.collapsible').collapsible({
+				onOpenStart : openFolder,
+				onCloseStart : closeFolder
+		    });
+			$('a.adoscript_docu').click(function() {
+			  //replaced, not required
+			});
+			
+			//scroll to position
+			var screenPosition = openElement.get( 0 ).getBoundingClientRect();
+			$('.sidenav').scrollTop(screenPosition.top-300);
+		});
+	</script>
+    <script src="/assets/prism/prism.js"></script>
+  
+	
+</body>
+
+</html>

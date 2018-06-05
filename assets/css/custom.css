@@ -1,0 +1,175 @@
+/*border style for sidebar*/
+.adoscript_sidenav {
+	border-right-color: #e0e0e0;
+	border-right-width: 1px;
+	border-right-style: solid;
+}
+div.adoscript_container h1 {
+	font-size: 2em;
+}
+ul.sidenav.sidenav-fixed li.logo {
+    text-align: center;
+    margin-top: 32px;
+    margin-bottom: 136px;
+}
+
+ul.sidenav.sidenav-fixed li.logo>a:hover {
+    background-color: white;
+}
+
+.ais-search-box--input{
+	background-color:red;
+}
+
+li.search .search-wrapper {
+    color: #777;
+    margin-top: -1px;
+    border-top: 1px solid rgba(0,0,0,0.14);
+    /*border-bottom: 1px solid rgba(0,0,0,0.14);*/
+    margin-bottom: -1px;
+    -webkit-transition: margin .25s ease;
+    transition: margin .25s ease;
+} 
+
+
+li.search {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 160px;
+    margin-top: 1px;
+    padding: 1px 0 0 0;
+    z-index: 2;
+}
+
+
+li.search .search-wrapper input#search {
+    color: #777;
+    display: block;
+    font-size: 16px;
+    font-weight: 300;
+    width: 100%;
+    height: 62px;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 45px 0 30px;
+    border: 0;
+}
+
+li.search .search-wrapper i.material-icons {
+    position: absolute;
+    top: 21px;
+    right: 10px;
+    cursor: pointer;
+}
+
+li.version {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+li.version .dropdown-trigger .caret {
+    position: relative;
+    top: 10px;
+    left: 30px;
+    fill: rgba(0,0,0,0.6);
+}
+
+li.version .dropdown-trigger {
+    margin: 0 auto;
+    display: inline-block;
+    padding: 0 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    width: 150px;
+}
+
+
+#logo-container {
+    height: 57px;
+    margin-bottom: 32px;
+}
+
+.adoscript_menu_open {
+	font-size: 37px;
+	color: white;
+}
+
+
+input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+	border-bottom: 1px solid #989898;
+	-webkit-box-shadow: 0 0px 0 0 #989898;
+    box-shadow: 0 0px 0 0 #989898;
+   
+}
+
+.sidenav .collapsible-body>ul:not(.collapsible)>li.active, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active {
+	background-color: #989898;
+}
+
+.adoscript_nav {
+	background-color: #989898;
+	padding-left: 20px;
+}
+
+.adoscript_menu_trigger {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+
+.sidenav li>a.collapsible-header>i.material-icons {
+	float: left;
+	margin-right: 5px;
+	margin-left: -5px;
+}
+
+/*sidebar font size override */
+.sidenav li>a {
+	font-weight: 100;
+	font-size: small;
+}
+
+.adoscript_sidenav_intend {
+	padding-left: 20px;
+}
+
+header, main, footer {
+	padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+	header, main, footer {
+		padding-left: 0;
+	}
+}
+
+@media only screen and (min-width : 993px) {
+	.container {
+		width: 90%;
+	}
+	.adoscript_menu_trigger {
+		visibility: hidden;
+	}
+}
+/*sidenav level 3*/
+div.collapsible-body ul li ul li div.collapsible-body ul li ul li div.collapsible-body ul li
+	{
+	/*background-color: yellow;*/
+	text-indent: 30px;
+}
+
+/*sidenav level 2*/
+div.collapsible-body ul li ul li div.collapsible-body ul li {
+	/*background-color: red;*/
+	text-indent: 20px;
+}
+
+/*sidenav level 1*/
+div.collapsible-body ul li {
+	/*background-color: green;*/
+	text-indent: 10px;
+}

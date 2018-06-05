@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+  
+     <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css"><!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/assets/materialize/css/materialize.min.css" media="screen,projection"><!--Import custom css including overrides -->
+    <link type="text/css" rel="stylesheet" href="/assets/css/custom.css" media="screen,projection"><!--Let browser know website is optimized for mobile-->
+    <link type="text/css" rel="stylesheet" href="/assets/css/custom_callout.css" media="screen,projection"><!--Let browser know website is optimized for mobile-->
+
+    <link href="/assets/prism/prism.css" rel="stylesheet" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <!--<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" />--></head>
+<body>
+	<header>
+		<nav class="z-depth-0 adoscript_nav	">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">RUN_VOLUME_ANALYSIS</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+				</ul>
+			</div>
+		</nav>
+		<ul id="slide-out"
+			class="sidenav sidenav-fixed z-depth-0 adoscript_sidenav">
+		<li class="logo"><a id="logo-container" href="/" class="brand-logo">
+            <object id="front-page-logo" type="image/png" data="/assets/images/adoxx_logo.png">Your browser does not support SVG</object></a></li>
+		<!-- <li class="version"><a href="#" data-target="version-dropdown" class="dropdown-trigger">
+            ADOxx 1.5
+            <svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a><ul id="version-dropdown" class="dropdown-content" tabindex="0">
+            <li tabindex="0"><a>ADOxx 1.3</a></li>
+            <li tabindex="0"><a>ADOxx 1.5</a></li>
+            <li tabindex="0"><a href="#">ADOxx 1.7</a></li>
+          </ul>
+          
+        </li>	 -->		
+			
+        <li class="search">
+          	  <div id="search-searchbar"></div>
+        </li>
+        <li class="divider"></li>
+        
+		</ul>
+		<a href="#" data-target="slide-out" class="sidenav-trigger adoscript_menu_trigger" ><i
+			class="material-icons adoscript_menu_open">menu</i></a>
+	</header>
+
+	<main>
+	<div class="container adoscript_container">
+	
+	
+<div id="search-hits-container" class="callout">
+<div class="search-result-header">Search results <div id="stats-container"></div></div>
+  <div id="search-hits"></div>
+</div>
+
+
+
+    <span class="new badge grey" data-badge-caption="ADOxx 1.5"></span>
+  
+    <span class="new badge grey" data-badge-caption="ADOxx 1.3"></span>
+  
+
+
+	
+	
+	
+	<p>RUN_VOLUME_ANALYSIS executes the Volume Analysis (2nd simulation algorithm, aka Static Assignment) without showing its start dialog.</p>
+
+<h1 id="syntax">Syntax:</h1>
+
+<pre class="line-numbers"><code class="language-adoscript">
+CC "Simulation" RUN_VOLUME_ANALYSIS	appmodelname:strValue
+									[ runs:intValue ]
+									[ dpy:intValue ]
+									[ hpd:intValue ]
+									[ simoption:intValue ]
+									[ adopt-results:ResultPeriodType ]
+									[ auto-read-only:boolValue ]
+									[ auto-close:boolValue ]
+									[ auto-volume:boolValue ]
+									[ auto-component:boolValue ]
+									[ auto-loop:boolValue ]
+									[ setLoopDetectionCount:intValue ]
+									[ randseed:intValue ] 
+									[ programcalls:boolValue ]
+									[ path-analysis:boolValue ]
+									[ calculation:boolValue ]
+									[ protocol:ProtocolType ]
+									[ protfile:strValue ]
+									[ no-error-messages:boolValue ] 
+									[ no-result-window ] 
+									[ process-results:{ ResultProcessingJobList } ]
+
+ProtocolType :		none | short-format | long-format .
+
+ResultProcessingJobList :	{ ResultProcessingJob } .
+
+ResultProcessingJob :	JOB mode:ResultMode [ classid:id relationclassid:id ]
+											period-type:ResultPeriodType
+											[ handler:procedureName ] [ show-browser ] .
+
+ResultMode :	"process-related" | "person-related" |
+				"we-related" | "capacity-planning" |
+				"resource-process-related" | "resource-related" | "resource-we-related" .
+
+ResultPeriodType :		"null" | "per-process" | "per-month" | "per-year" .
+
+#--&gt;RESULT ecode:intValue errmsg:strValue .
+
+</code></pre>
+
+<h1 id="parameters">Parameters:</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">appmodelname</code></td>
+      <td>Name of the application model.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">runs</code></td>
+      <td>Number of simulation runs. If not specified, the default (e.g. from the last simulation) will be used.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">dpy</code></td>
+      <td>Working days per year. If not specified, the default (e.g. from the last simulation) will be used. There is no check done wether dpy &lt;= 365.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">hpd</code></td>
+      <td>Working hours per day. If not specified, the default (e.g. from the last simulation) will be used. There is no check done wether hpd &lt;= 24.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">simoption</code></td>
+      <td>Number of the SimMapping option to be used [1 .. n]. If not given, the default (e.g. from the last simulation) will be used. If a too small value (&lt;= 0) is passed, 1 is assumed. If a too large value is passed, an error message will be displayed.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">adopt-results</code></td>
+      <td>If not set to null, the simulation result values are being saved into the models after simulation. Before simulation, models of the application model which are not already loaded are automatically being loaded writeable. These models are not being closed after the simulation. If any of the relevant models is loaded write protected, the execution stops with an error. If the result window is not suppressed (i.e. no-result-window is not specified), using result adoption will be effective before the result window appears. Note that this has to be confirmed by the user. If set to null, models which are not already loaded are loaded write protected and these models are being closed after the simulation. The simulation will not modify any model. Default: null (no adoption).</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">auto-read-only</code></td>
+      <td>Sets an automated answer to the query about models being loaded in read-only mode. The query will not be displayed to the user. If set to 0, and one of the relevant models is loaded write protected, the execution will stop with an error. If set to 1, the simulation shall be executed regardless of models being write protected. If adopt-results is set to anything but null and any of the relevant models is loaded write protected, then the execution will stop with an error, even if auto-read-only is set to 1. So auto-read-only is meaningless in that case.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">auto-close</code></td>
+      <td>Sets an automated answer to the query about models being closed after the simulation. The query will not be displayed to the user. If set to 0, all models stay loaded. If set to 1, models which have automatically been loaded write protected, are being closed. If adopt-results is set to anything but null, then models have been loaded writeable, have been modified and are not being closed. So auto-close is meaningless in that case.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">auto-volume</code></td>
+      <td>Sets an automated answer to the query about no volume being specified in a process model. The query will not be displayed to the user.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">auto-component</code></td>
+      <td>Sets an automated answer to the query about passive simulation components being disabled. The query will not be displayed to the user.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">auto-loop</code></td>
+      <td>Sets an automated answer to the query about continuing simulation although a probably endless loop was detected. The query will not be displayed to the user. (Note: If the simulation is unable to continue because of an endless loop exhausting the available system resources, a Windows system error message will still be displayed. Afterwards ADOxx may crash because of missing system resources.)</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">setLoopDetectionCount</code></td>
+      <td>Sets the number of subsequent objects within one process instance which indicate that an endless loop has to be assumed. If no count is given, the standard value 5000 ist used. Note that loop detection is only performed during path analysis and volume analysis, not during workload analysis.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">randseed</code></td>
+      <td>Default randseed-value for the deterministic simulation.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">programcalls</code></td>
+      <td>Sets a default value for the passive simulation component “programcalls”. If this parameter is not given, the last value (from previous simulatio runs) will be used. If no simulation was performed previously, then the default value is: 0 (off).</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">path-analysis</code></td>
+      <td>Sets a default value for the passive simulation component “path analysis”. If this parameter is not given, the last value (from previous simulatio runs) will be used. If no simulation was performed previously, then the default value is: 1 (on).</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">calculation</code></td>
+      <td>Sets a default value for the passive simulation component “calculation”. If this parameter is not given, the last value (from previous simulatio runs) will be used. If no simulation was performed previously, then the default value is: 1 (on).</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">protocol</code></td>
+      <td>Sets a default value for the passive simulation component “simulation protocol”. Allowed values are none (no protocol is generated), short-format (short format protocol) and long-format (long format protocol). Default: none.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">protfile</code></td>
+      <td>Path to the protocol file.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">no-error-messages</code></td>
+      <td>If set to 1, no simulation error messages will be displayed. If an error occurs, the simulation is simply aborted and the error message is returned via the result value errmsg.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">no-result-window</code></td>
+      <td>If this option is specified, the simulation results window is suppressed. Otherwise your AdoScript program is paused until the user closes the simulation results window.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">process-results</code></td>
+      <td>Here you can specify a list of result processing jobs. Each job generates results.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The results are of a certain result type (mode) and a certain result period type (period-type). If the result type is we-related, capacity-planning or resource-we-related, then additionally a class and a relation class have to be specified for the result generation (classid, relationclassid). You can specify a callback procedure (handler), which is called with the generated results as parameter. This procedure must have exactly one parameter results:array. The passed array has two dimensions and contains all cells of the result table, inclusive column headers, as string values. See example 2 for a usage of a callback procedure. If show-browser is specifyed, a browser window is being shown, which contains the result table.</p>
+
+<h1 id="returns">Returns:</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">ecode</code></td>
+      <td>0</td>
+      <td>1 , 0 meaning success and 1 meaning error or cancel.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">errmsg</code></td>
+      <td>strValue, holds the error message of the last (if any) simulation-error that occured. This message is the same text that is usually displayed to the user in an ErrorBox.</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="remarks">Remarks:</h1>
+
+<p>Any user interaction, which normally would happen before, during and after the simulation run, can be bypassed by specifying options. So the simulation can be run completely without being paused by a query or an error box. Even the simulation results dialog can be suppressed. The simulation results can therefore be processed by your AdoScript program.</p>
+
+<h1 id="see-also">See Also:</h1>
+
+<p>Example 1 (Running the simultation without any user interaction):</p>
+
+<p>At first, let the variable appmodelname be set, e.g. by using a model select box</p>
+<pre class="line-numbers"><code class="language-adoscript">
+
+CC "CoreUI" MODEL_SELECT_BOX with-app-models mgroup-sel without-models
+CC "Core" GET_APPMODEL_INFO appmodelid:(VAL appmodelids)
+
+
+</code></pre>
+
+<p>The following command lets the simulation run without asking the user for parameters</p>
+<pre class="line-numbers"><code class="language-adoscript">
+
+CC "Simulation" RUN_VOLUME_ANALYSIS
+        appmodelname:(appmodelname)
+        adopt-results:"per-process" no-result-window 
+
+
+</code></pre>
+
+<p>However, if an error occours, your AdoScript program will be paused because an error box will be shown. Also, if no volume is specified in a process model, if passive simulation components are disabled, or if a probably endless loop is detected, your AdoScript program will wait for an ackknowledgement by the user.<br />
+If you are not sure whether all conditions for a successful simulation are satisfied or not, but you want to ensure that the AdoScript program will not be paused, you may add options to suppress query and eror boxes:</p>
+<pre class="line-numbers"><code class="language-adoscript">
+
+CC "Simulation" RUN_VOLUME_ANALYSIS
+        appmodelname:(appmodelname)
+        adopt-results:"per-process" no-result-window
+        auto-volume:1 auto-component:1 auto-loop:1
+        no-error-messages:1
+		
+
+</code></pre>
+
+<p>Example 2 (Running the simultation with result processing) :<br />
+We take the CC from the end of example 1, remove the result adoption and add a callback for result processing</p>
+<pre class="line-numbers"><code class="language-adoscript">
+
+CC "Simulation" RUN_VOLUME_ANALYSIS
+        appmodelname:(appmodelname)
+        adopt-results:"per-process" no-result-window
+        auto-volume:1 auto-component:1 auto-loop:1
+        process-results:{
+            JOB mode:"process-related" period-type:"per-process"
+                handler:"PROCESS_RESULTS"
+        }
+
+# callback procedure for JOB in RUN_VOLUME_ANALYSIS
+# results is a two-dimensional array of strings
+PROCEDURE PROCESS_RESULTS results:array {
+    # we produce a csv text -info- which is being shown at the end
+    # (csv = "comma separated value")
+    SETL info:""
+    # for each each row of the results
+    FOR rowindex from:0 to:(LEN results - 1) {
+        SET row:(results[rowindex])
+        # for each column of current row
+        FOR colindex from:0 to:(LEN row - 1) {
+           # append ";" if not first col
+           IF (colindex) {
+               SET info:(info + ";")
+           }
+           # append current cell
+           SET info:(info + (row[colindex]))
+        }
+        # append newline
+        SET info:(info + "\n")
+    }
+    # show csv text in an infobox
+    CC "AdoScript" INFOBOX (info)
+}
+
+
+</code></pre>
+
+
+</div>
+	
+	
+	
+	</main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">Your awesome title</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div> -->
+
+  </div>
+
+</footer>
+<script type="text/javascript"
+		src="/assets/jquery/jquery-3.3.1.min.js">
+	</script>
+	<!-- Including InstantSearch.js library and styling -->
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
+<!-- load custom search styles -->
+<link type="text/css" rel="stylesheet" href="/assets/css/custom_search.css" media="screen,projection">
+
+<script>
+// Instanciating InstantSearch.js with Algolia credentials
+const search = instantsearch({
+  appId: 'QOEMVL4S23',
+  indexName: 'adoscript_api_docu',
+  apiKey: '5186f57e5a3ae3be1ee2d0a0d99335cb',
+  searchFunction: function(helper) {
+	    var searchResults = $('#search-hits');
+	    var searchResultContainer = $('#search-hits-container');
+	    if (helper.state.query === '') {
+	      // empty query string -> hide the search results & abort the search
+	      searchResults.hide();
+	      searchResultContainer.hide();
+	      return;
+	    }
+	    // perform the regular search & display the search results
+	    helper.search();
+	    searchResults.show();
+	    searchResultContainer.show();
+	  }
+});
+
+// Adding searchbar and results widgets
+search.addWidget(
+  instantsearch.widgets.searchBox({
+    container: '#search-searchbar',
+    placeholder: 'Search documentation...',
+    poweredBy: true, // This is required if you're on the free Community plan
+    reset : true,
+    cssClasses: {
+        root: 'adoscript_searchbox',
+        input: 'adoscript_search_input',
+      }
+  })
+);
+search.addWidget(
+  instantsearch.widgets.hits({
+    container: '#search-hits',
+    templates: {
+        item: function(hit) {
+          if (hit._highlightResult.title && hit._highlightResult.content) {
+            const content = hit._highlightResult.content.value;
+            const title = hit._highlightResult.title.value;
+            var version_html = "";
+            var tags = hit.tags;
+            tags.sort(function(x, y) {
+            	return (x < y) ? 1 : (x > y) ? -1 : 0;
+		    });
+            for (var i = 0; i < tags.length; i++) {
+                version_html+='<span class="adoscript_version new badge grey" style="font-size: 0.6em;" data-badge-caption="ADOxx '+hit.tags[i]+'"></span>';
+            }
+            return `
+              <bold><a class="adoscript_hit_title" href="${hit.url}">${title}</a>${version_html}</bold>
+              <p class="adoscript_hit_content">${content}</p>
+              <p class="adoscript_type">Type: ${hit.categories[0]}</p>
+            `;
+          }
+        }
+      },
+      cssClasses: {
+          root: 'collection',
+          item: 'collection-item',
+          empty: 'collection-item'
+        }
+  })
+);
+search.addWidget(
+		  instantsearch.widgets.stats({
+		    container: '#stats-container'
+		  })
+		);
+
+// Starting the search
+search.start();
+
+$('.ais-search-box--reset').on('click tap', function() {
+	$('.ais-search-box--input')
+    .val('')
+    .focus()
+    .trigger({ type: 'keypress', which: 13 });
+	search.helper.setQuery('').search();
+});
+
+</script>
+
+	<script type="text/javascript" src="/assets/materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="/sidebar.js"></script>
+	
+	
+	<script type="text/javascript">
+	
+	
+		$(document).ready(function() {
+				
+			function getNestedChildren(arr, parent) {
+			    var out = []
+			    for(var i in arr) {
+			        if(arr[i].parent == parent) {
+			            var children = getNestedChildren(arr, arr[i].id)
+
+			            if(children.length) {
+			                arr[i].children = children
+			            }
+			            out.push(arr[i])
+			        }
+			    }
+			    return out
+			}
+			
+			function getHTMLTree ( a, str ) {
+				//sort by folder, files first, then folders
+				a.sort(function(x, y) {
+					var xType = x.isFolder;
+					var yType = y.isFolder; 
+			        // true values first
+			        //return (xType === yType)? 0 : xType? -1 : 1;
+			        // false values first
+			        return (xType === yType)? 0 : xType? 1 : -1;
+			    });
+			    for (var i = 0; i < a.length; i++) {	
+			        //this is a folder, as there are children: FIXME: could also be done through isFolder property
+			        if (a[i].children && a[i].children.length) {
+			        	var cssActive = "";
+			        	var iconClass = "keyboard_arrow_right";
+			        	if (localStorage.getItem(a[i].url)) {
+			        		cssActive = "active";
+			        		iconClass = "keyboard_arrow_down";
+			        	}
+			        	str += '<li class="no-padding"><ul class="collapsible collapsible-accordion"><li class="folder '+cssActive+'" id="'+a[i].url+'"><a class="collapsible-header waves-effect">'+a[i].title+'<i class="material-icons">'+iconClass+'</i></a><div class="collapsible-body"><ul>';
+			        	str += getHTMLTree( a[i].children, '');
+			        	str += '</ul></div></li></ul></li>';			        	
+			        }
+			        //this is a file part
+			        else {
+			        	if (a[i].url == '/docs/message_ports/component_apis/simulation/run_volume_analysis.html') {
+				            str += '<li class="active"><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+							
+			        	}
+			        	else {
+				            str += '<li><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+
+			        	}
+			        }
+			    }
+			    return str;
+			}
+			
+			//sort the folder in hierarchical tree, starting from sublevel /docs
+			var hierarchicalFolders = getNestedChildren(sidebar, "/docs");			
+			$(".sidenav").append(getHTMLTree( hierarchicalFolders, ''));
+			
+			
+			function openFolder () {
+				//change the icon
+				this.el.childNodes["0"].childNodes["0"].childNodes[1].innerHTML="keyboard_arrow_down";
+				//store state open in localStorage
+				//console.log(this.el.children["0"].getAttribute('id'));
+				localStorage.setItem(this.el.children["0"].getAttribute('id'), true);
+			}
+			
+			function closeFolder () {
+				//change the icon
+				this.el.childNodes["0"].childNodes["0"].childNodes[1].innerHTML="keyboard_arrow_right";
+				localStorage.removeItem(this.el.children["0"].getAttribute('id'));
+
+			}
+			//this opens all folders
+			var openElement = $("a[href$='/docs/message_ports/component_apis/simulation/run_volume_analysis.html']")
+			var parentElementsLI = openElement.parents('li.folder');
+			parentElementsLI.addClass("active");
+	
+			
+			//change the handle for each icon
+			parentElementsLI.each(function( index ) {
+			  $(this).children("a.collapsible-header").children("i.material-icons").html ("keyboard_arrow_down");
+			});
+			
+
+			
+			$('.sidenav').sidenav();
+			$('.dropdown-trigger').dropdown();
+			$('.collapsible').collapsible({
+				onOpenStart : openFolder,
+				onCloseStart : closeFolder
+		    });
+			$('a.adoscript_docu').click(function() {
+			  //replaced, not required
+			});
+			
+			//scroll to position
+			var screenPosition = openElement.get( 0 ).getBoundingClientRect();
+			$('.sidenav').scrollTop(screenPosition.top-300);
+		});
+	</script>
+    <script src="/assets/prism/prism.js"></script>
+  
+	
+</body>
+
+</html>

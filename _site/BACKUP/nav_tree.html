@@ -1,0 +1,25 @@
+
+{% assign docs = site.docs | where:"parent", include.parent %}
+
+<ul>
+  {% for doc in docs %}
+    {% assign int_size = site.docs | where:"parent", doc.self | size %}
+    {% capture string_size %}
+      {{ int_size }}
+    {% endcapture %}
+    {% if int_size == 0 %}
+      <li><a class="waves-effect" href="{{ doc.url | relative_url }}">{{ doc.title | escape }}</a></li>
+    {% else %}
+      <li class="no-padding">
+			<ul class="collapsible collapsible-accordion">
+				<li><a class="waves-effect collapsible-header"
+					href="{{ doc.url | relative_url }}">{{ doc.title | escape }}<i class="material-icons">arrow_drop_down</i></a>
+					<div class="collapsible-body">
+                      {% include nav_tree.html parent=doc.self%}
+                    </div>
+                 </li>
+             </ul>
+       </li>					
+    {% endif %}
+{% endfor %}
+</ul>

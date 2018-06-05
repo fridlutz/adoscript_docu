@@ -1,0 +1,18 @@
+{% assign docs = site.docs  | where:"parent", include.parent %}
+
+{% capture sidebar %}
+  {% for doc in docs %}
+  {% assign children = site.docs  | where:"parent", doc.self | size %}
+  <!-- level 1 -->
+  <li>{{ doc.title | escape }} self: {{ doc.self | escape }} {{ children }}     
+      <!-- Level 2 -->
+      {% if children > 0 %}    
+        <ul>
+          	{% include sidebar_navigation.html parent=doc.self%}
+        </ul>
+      {% endif %}     
+  </li>
+  {% endfor %}
+{% endcapture %}
+{% assign sidebar = sidebar | strip %}
+<ul>{{ sidebar }}</ul>
