@@ -119,11 +119,11 @@
 			        //this is a file part
 			        else {
 			        	if (a[i].url == '{{ page.url}}') {
-				            str += '<li class="active"><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+				            str += '<li class="active"><a class="adoscript_docu waves-effect" href="{{ site.baseurl}}'+a[i].url+'">'+a[i].title+'</a></li>'
 							
 			        	}
 			        	else {
-				            str += '<li><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+				            str += '<li><a class="adoscript_docu waves-effect" href="{{ site.baseurl}}'+a[i].url+'">'+a[i].title+'</a></li>'
 
 			        	}
 			        }
