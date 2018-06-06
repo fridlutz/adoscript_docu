@@ -44,5 +44,5 @@ deploy_to_staging:
     - echo "Acquire::http::Proxy \"http://10.0.1.8:8000\";" >> /etc/apt/apt.conf
     - apt-get update -qq && apt-get install -y -qq apt-utils sshpass openssh-client
     - cd public/
-    - sshpass -p $SSH_Pass ssh $SSH_User@$SSH_Host "mkdir /var/www/html/$StagingEnvironmentContext"
+    - sshpass -p $SSH_Pass ssh $SSH_User@$SSH_Host "mkdir /var/www/html/adoscript_docu"
     - sshpass -p $SSH_Pass scp -r -o StrictHostKeyChecking=no * $SSH_User@$SSH_Host:/var/www/html/$StagingEnvironmentContext
