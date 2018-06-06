@@ -1,0 +1,5 @@
+{% if singleton_variable == nil %}
+ {% capture singleton_variable %}
+I am a singleton variable. {{page.url}}
+{% endcapture %}
+{% endif %}

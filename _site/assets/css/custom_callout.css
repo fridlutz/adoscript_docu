@@ -1,0 +1,21 @@
+.callout {
+    position: fixed;
+    margin: 18px 0;
+    /* easy rounded corners for modern browsers */
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    top: 220px;
+    left: 10px;
+    z-index: 1000;
+    width: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+    border: 1px solid #e0e0e0;
+    background-color:white;
+}
+.collection {
+	border-style: none;
+	margin: 0px;
+}
+

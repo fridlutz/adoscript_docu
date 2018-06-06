@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+  
+     <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css"><!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/assets/materialize/css/materialize.min.css" media="screen,projection"><!--Import custom css including overrides -->
+    <link type="text/css" rel="stylesheet" href="/assets/css/custom.css" media="screen,projection"><!--Let browser know website is optimized for mobile-->
+    <link type="text/css" rel="stylesheet" href="/assets/css/custom_callout.css" media="screen,projection"><!--Let browser know website is optimized for mobile-->
+
+    <link href="/assets/prism/prism.css" rel="stylesheet" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <!--<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" />--></head>
+<body>
+	<header>
+		<nav class="z-depth-0 adoscript_nav	">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">GET_OBJ_NAME</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+				</ul>
+			</div>
+		</nav>
+		<ul id="slide-out"
+			class="sidenav sidenav-fixed z-depth-0 adoscript_sidenav">
+		<li class="logo"><a id="logo-container" href="/" class="brand-logo">
+            <object id="front-page-logo" type="image/png" data="/assets/images/adoxx_logo.png">Your browser does not support SVG</object></a></li>
+		<!-- <li class="version"><a href="#" data-target="version-dropdown" class="dropdown-trigger">
+            ADOxx 1.5
+            <svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a><ul id="version-dropdown" class="dropdown-content" tabindex="0">
+            <li tabindex="0"><a>ADOxx 1.3</a></li>
+            <li tabindex="0"><a>ADOxx 1.5</a></li>
+            <li tabindex="0"><a href="#">ADOxx 1.7</a></li>
+          </ul>
+          
+        </li>	 -->		
+			
+        <li class="search">
+          	  <div id="search-searchbar"></div>
+        </li>
+        <li class="divider"></li>
+        
+		</ul>
+		<a href="#" data-target="slide-out" class="sidenav-trigger adoscript_menu_trigger" ><i
+			class="material-icons adoscript_menu_open">menu</i></a>
+	</header>
+
+	<main>
+	<div class="container adoscript_container">
+	
+	
+<div id="search-hits-container" class="callout">
+<div class="search-result-header">Search results <div id="stats-container"></div></div>
+  <div id="search-hits"></div>
+</div>
+
+
+
+    <span class="new badge grey" data-badge-caption="ADOxx 1.5"></span>
+  
+    <span class="new badge grey" data-badge-caption="ADOxx 1.3"></span>
+  
+
+
+	
+	
+	
+	<p>The command GET_OBJ_NAME retrieves the name of an instance. This instance must exist in any loaded model - which one is determined automatically!</p>
+
+<h1 id="syntax">Syntax:</h1>
+
+<pre class="line-numbers"><code class="language-adoscript">
+CC "Core" GET_OBJ_NAME objid:id
+
+#--&gt;RESULT ecode:intValue objname:strValue
+
+</code></pre>
+
+<h1 id="parameters">Parameters:</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">objid</code></td>
+      <td>id</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="returns">Returns:</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">ecode</code></td>
+      <td>intValue, Contains the error code or is 0 in case of success.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">objname</code></td>
+      <td>strValue</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="remarks">Remarks:</h1>
+
+<h1 id="see-also">See Also:</h1>
+
+<p>Example 1:</p>
+
+<pre class="line-numbers"><code class="language-adoscript">
+
+# get current model
+SEND "GET_ACTIVE_MODEL" to:"Modeling" answer:modelid
+
+IF (LEN (modelid) = 0)
+{
+  CC "AdoScript" ERRORBOX ("Please open a model!")
+  EXIT
+}
+
+# get all objs of class
+CC "Core" GET_ALL_OBJS_OF_CLASSNAME modelid:(VAL modelid) classname:"Aktivität"
+
+IF (LEN (objids) = 0)
+{
+  CC "AdoScript" ERRORBOX ("You have no instances of class 'Aktivität'!")
+  EXIT
+}
+
+# get name of first object
+CC "Core" GET_OBJ_NAME objid:(VAL token (objids, 0, " "))
+
+CC "AdoScript" INFOBOX ("First 'Aktivität' found is called '" + (objname) + "'")
+
+
+</code></pre>
+<ul>
+  <li>get active model’s id</li>
+  <li>determine all instances of class “Aktivität”</li>
+  <li>check if any instance was found</li>
+  <li>get name of first instance and show infobox</li>
+</ul>
+
+</div>
+	
+	
+	
+	</main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">Your awesome title</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div> -->
+
+  </div>
+
+</footer>
+<script type="text/javascript"
+		src="/assets/jquery/jquery-3.3.1.min.js">
+	</script>
+	<!-- Including InstantSearch.js library and styling -->
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
+<!-- load custom search styles -->
+<link type="text/css" rel="stylesheet" href="/assets/css/custom_search.css" media="screen,projection">
+
+<script>
+// Instanciating InstantSearch.js with Algolia credentials
+const search = instantsearch({
+  appId: 'QOEMVL4S23',
+  indexName: 'adoscript_api_docu',
+  apiKey: '5186f57e5a3ae3be1ee2d0a0d99335cb',
+  searchFunction: function(helper) {
+	    var searchResults = $('#search-hits');
+	    var searchResultContainer = $('#search-hits-container');
+	    if (helper.state.query === '') {
+	      // empty query string -> hide the search results & abort the search
+	      searchResults.hide();
+	      searchResultContainer.hide();
+	      return;
+	    }
+	    // perform the regular search & display the search results
+	    helper.search();
+	    searchResults.show();
+	    searchResultContainer.show();
+	  }
+});
+
+// Adding searchbar and results widgets
+search.addWidget(
+  instantsearch.widgets.searchBox({
+    container: '#search-searchbar',
+    placeholder: 'Search documentation...',
+    poweredBy: true, // This is required if you're on the free Community plan
+    reset : true,
+    cssClasses: {
+        root: 'adoscript_searchbox',
+        input: 'adoscript_search_input',
+      }
+  })
+);
+search.addWidget(
+  instantsearch.widgets.hits({
+    container: '#search-hits',
+    templates: {
+        item: function(hit) {
+          if (hit._highlightResult.title && hit._highlightResult.content) {
+            const content = hit._highlightResult.content.value;
+            const title = hit._highlightResult.title.value;
+            var version_html = "";
+            var tags = hit.tags;
+            tags.sort(function(x, y) {
+            	return (x < y) ? 1 : (x > y) ? -1 : 0;
+		    });
+            for (var i = 0; i < tags.length; i++) {
+                version_html+='<span class="adoscript_version new badge grey" style="font-size: 0.6em;" data-badge-caption="ADOxx '+hit.tags[i]+'"></span>';
+            }
+            return `
+              <bold><a class="adoscript_hit_title" href="${hit.url}">${title}</a>${version_html}</bold>
+              <p class="adoscript_hit_content">${content}</p>
+              <p class="adoscript_type">Type: ${hit.categories[0]}</p>
+            `;
+          }
+        }
+      },
+      cssClasses: {
+          root: 'collection',
+          item: 'collection-item',
+          empty: 'collection-item'
+        }
+  })
+);
+search.addWidget(
+		  instantsearch.widgets.stats({
+		    container: '#stats-container'
+		  })
+		);
+
+// Starting the search
+search.start();
+
+$('.ais-search-box--reset').on('click tap', function() {
+	$('.ais-search-box--input')
+    .val('')
+    .focus()
+    .trigger({ type: 'keypress', which: 13 });
+	search.helper.setQuery('').search();
+});
+
+</script>
+
+	<script type="text/javascript" src="/assets/materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="/sidebar.js"></script>
+	
+	
+	<script type="text/javascript">
+	
+	
+		$(document).ready(function() {
+				
+			function getNestedChildren(arr, parent) {
+			    var out = []
+			    for(var i in arr) {
+			        if(arr[i].parent == parent) {
+			            var children = getNestedChildren(arr, arr[i].id)
+
+			            if(children.length) {
+			                arr[i].children = children
+			            }
+			            out.push(arr[i])
+			        }
+			    }
+			    return out
+			}
+			
+			function getHTMLTree ( a, str ) {
+				//sort by folder, files first, then folders
+				a.sort(function(x, y) {
+					var xType = x.isFolder;
+					var yType = y.isFolder; 
+			        // true values first
+			        //return (xType === yType)? 0 : xType? -1 : 1;
+			        // false values first
+			        return (xType === yType)? 0 : xType? 1 : -1;
+			    });
+			    for (var i = 0; i < a.length; i++) {	
+			        //this is a folder, as there are children: FIXME: could also be done through isFolder property
+			        if (a[i].children && a[i].children.length) {
+			        	var cssActive = "";
+			        	var iconClass = "keyboard_arrow_right";
+			        	if (localStorage.getItem(a[i].url)) {
+			        		cssActive = "active";
+			        		iconClass = "keyboard_arrow_down";
+			        	}
+			        	str += '<li class="no-padding"><ul class="collapsible collapsible-accordion"><li class="folder '+cssActive+'" id="'+a[i].url+'"><a class="collapsible-header waves-effect">'+a[i].title+'<i class="material-icons">'+iconClass+'</i></a><div class="collapsible-body"><ul>';
+			        	str += getHTMLTree( a[i].children, '');
+			        	str += '</ul></div></li></ul></li>';			        	
+			        }
+			        //this is a file part
+			        else {
+			        	if (a[i].url == '/docs/message_ports/manipulation_apis/core/get_obj_name.html') {
+				            str += '<li class="active"><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+							
+			        	}
+			        	else {
+				            str += '<li><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+
+			        	}
+			        }
+			    }
+			    return str;
+			}
+			
+			//sort the folder in hierarchical tree, starting from sublevel /docs
+			var hierarchicalFolders = getNestedChildren(sidebar, "/docs");			
+			$(".sidenav").append(getHTMLTree( hierarchicalFolders, ''));
+			
+			
+			function openFolder () {
+				//change the icon
+				this.el.childNodes["0"].childNodes["0"].childNodes[1].innerHTML="keyboard_arrow_down";
+				//store state open in localStorage
+				//console.log(this.el.children["0"].getAttribute('id'));
+				localStorage.setItem(this.el.children["0"].getAttribute('id'), true);
+			}
+			
+			function closeFolder () {
+				//change the icon
+				this.el.childNodes["0"].childNodes["0"].childNodes[1].innerHTML="keyboard_arrow_right";
+				localStorage.removeItem(this.el.children["0"].getAttribute('id'));
+
+			}
+			//this opens all folders
+			var openElement = $("a[href$='/docs/message_ports/manipulation_apis/core/get_obj_name.html']")
+			var parentElementsLI = openElement.parents('li.folder');
+			parentElementsLI.addClass("active");
+	
+			
+			//change the handle for each icon
+			parentElementsLI.each(function( index ) {
+			  $(this).children("a.collapsible-header").children("i.material-icons").html ("keyboard_arrow_down");
+			});
+			
+
+			
+			$('.sidenav').sidenav();
+			$('.dropdown-trigger').dropdown();
+			$('.collapsible').collapsible({
+				onOpenStart : openFolder,
+				onCloseStart : closeFolder
+		    });
+			$('a.adoscript_docu').click(function() {
+			  //replaced, not required
+			});
+			
+			//scroll to position
+			var screenPosition = openElement.get( 0 ).getBoundingClientRect();
+			$('.sidenav').scrollTop(screenPosition.top-300);
+		});
+	</script>
+    <script src="/assets/prism/prism.js"></script>
+  
+	
+</body>
+
+</html>

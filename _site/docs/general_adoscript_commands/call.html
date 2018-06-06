@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+  
+     <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css"><!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/assets/materialize/css/materialize.min.css" media="screen,projection"><!--Import custom css including overrides -->
+    <link type="text/css" rel="stylesheet" href="/assets/css/custom.css" media="screen,projection"><!--Let browser know website is optimized for mobile-->
+    <link type="text/css" rel="stylesheet" href="/assets/css/custom_callout.css" media="screen,projection"><!--Let browser know website is optimized for mobile-->
+
+    <link href="/assets/prism/prism.css" rel="stylesheet" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <!--<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" />--></head>
+<body>
+	<header>
+		<nav class="z-depth-0 adoscript_nav	">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">CALL</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+				</ul>
+			</div>
+		</nav>
+		<ul id="slide-out"
+			class="sidenav sidenav-fixed z-depth-0 adoscript_sidenav">
+		<li class="logo"><a id="logo-container" href="/" class="brand-logo">
+            <object id="front-page-logo" type="image/png" data="/assets/images/adoxx_logo.png">Your browser does not support SVG</object></a></li>
+		<!-- <li class="version"><a href="#" data-target="version-dropdown" class="dropdown-trigger">
+            ADOxx 1.5
+            <svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a><ul id="version-dropdown" class="dropdown-content" tabindex="0">
+            <li tabindex="0"><a>ADOxx 1.3</a></li>
+            <li tabindex="0"><a>ADOxx 1.5</a></li>
+            <li tabindex="0"><a href="#">ADOxx 1.7</a></li>
+          </ul>
+          
+        </li>	 -->		
+			
+        <li class="search">
+          	  <div id="search-searchbar"></div>
+        </li>
+        <li class="divider"></li>
+        
+		</ul>
+		<a href="#" data-target="slide-out" class="sidenav-trigger adoscript_menu_trigger" ><i
+			class="material-icons adoscript_menu_open">menu</i></a>
+	</header>
+
+	<main>
+	<div class="container adoscript_container">
+	
+	
+<div id="search-hits-container" class="callout">
+<div class="search-result-header">Search results <div id="stats-container"></div></div>
+  <div id="search-hits"></div>
+</div>
+
+
+
+    <span class="new badge grey" data-badge-caption="ADOxx 1.5"></span>
+  
+    <span class="new badge grey" data-badge-caption="ADOxx 1.3"></span>
+  
+
+
+	
+	
+	
+	<p>CALL calls a function in a dynamic link library (DLL).</p>
+
+<h1 id="syntax">Syntax:</h1>
+
+<pre class="line-numbers"><code class="language-adoscript">
+CALL dll:strExpr function:strExpr { InputParam }
+				[ result:varName ] [ freemem:strValue ]
+
+InputParam :	varname:anyExpr
+
+</code></pre>
+
+<h1 id="parameters">Parameters:</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">dll</code></td>
+      <td>strExpr, the name of the DLL</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">function</code></td>
+      <td>strExpr, the name of the function using the C declaration syntax.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">varname</code></td>
+      <td>anyExpr, a variable as in the definition of the function.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">result</code></td>
+      <td>varName, the return value of the called function is assigned to the run-time variable specified with the atribute result or to the run-time variable result if this specification is omitted.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">freemem</code></td>
+      <td>strValue, if specified, the memory allocated by the DLL is freed after the function has been executed</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="returns">Returns:</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">ecode</code></td>
+      <td>intValue, Contains the error code or is 0 in case of success.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">errtext</code></td>
+      <td>strValue, contains a textual representation of the ecode</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="remarks">Remarks:</h1>
+
+<p>The name of the DLL is specified with dll, the function is specified with function using the C function declaration syntax (see the sample below). A combination of a return value type and (zero, one ore more) parameter value types is called signature. Supported return value types of a called function are: void, long, double, char<strong>. Supported parameter value types are: long, double, char</strong>, long<strong>, double</strong>, char<em>**</em>, where the first three are input and the last three are output parameters. All possible signatures of these types are supported.</p>
+
+<p>If the return value type is char** or a parameter value type is char<strong>** the DLL is allocating memory to hold the string value. The freeing of this memory has to be done within the DLL too, but the “freemem” call is done by AdoScript. By default, AdoScript calls a function freemem (char</strong>) of the DLL if the memory is no longer needed (i.e. the string has been copied to an AdoScript run-time variable). If another function is specified with freemem in the CALL statement that function is called instead.</p>
+
+<p>All input paramerers are passed as attributes with the CALL statement using the same names as at the formal parameters in the function declaration. The output parameters are assigned to run-time variales, also with the same names as at the formal parameters in the function declaration. The return value of the called function is assigned to the run-time variable specified with the atribute result or to the run-time variable result if this specification is omitted.</p>
+
+<p>In a running AdoScript at most one DLL is loaded at a time. At the first execution of a CALL in a running AdoScript the DLL is loaded. For any following CALL with the same DLL the loaded DLL is reused. If another DLL is called, or the running AdoScript terminates, a previously loaded DLL is unloaded. With this behavior data can be build up inside a DLL using multiple calls. Although DLLs are freed at termination of an AdoScript, it is a good style to provide and use a cleanup function if data is stored inside a DLL.</p>
+
+<h1 id="see-also">See Also:</h1>
+
+<p>Example 1:</p>
+
+<p>Calling a DLL from AdoScript</p>
+<pre class="line-numbers"><code class="language-adoscript">
+
+# Functions returning void with input params only!
+CALL dll:"dll1.dll" function:"void f_void_void ()"
+CALL dll:"dll1.dll" function:"void f_void_long (long n)" n:4242
+CALL dll:"dll1.dll" function:"void f_void_double (double d)" d:3.14
+CALL dll:"dll1.dll" function:"void f_void_charptr (char **p)" p:"Hallo Welt"
+CALL dll:"dll1.dll" function:"void f_void_long_double_charptr (long n, double d, char** p)" n:4711 d:2.34 p:"Yippie"
+
+# Functions returning long with input params only!
+CALL dll:"dll1.dll" function:"long f_long_void ()" result:bla
+CC "AdoScript" INFOBOX (STR bla)
+CALL dll:"dll1.dll" function:"long f_long_long (long n)" result:bla n:4242
+CC "AdoScript" INFOBOX (STR bla)
+CALL dll:"dll1.dll" function:"long f_long_double (double d)" result:bla d:3.14
+CC "AdoScript" INFOBOX (STR bla)
+CALL dll:"dll1.dll" function:"long f_long_charptr (char **p)" result:bla p:"Hallo Welt"
+CC "AdoScript" INFOBOX (STR bla)
+CALL dll:"dll1.dll" function:"long f_long_long_double_charptr (long n, double d, char** p)" result:bla n:4711 d:2.34 p:"Yippie"
+CC "AdoScript" INFOBOX (STR bla)
+
+# Functions returning double with input params only!
+CALL dll:"dll1.dll" function:"double f_double_void ()" result:bla
+CC "AdoScript" INFOBOX (STR bla)
+CALL dll:"dll1.dll" function:"double f_double_long (long n)" result:bla n:4242
+CC "AdoScript" INFOBOX (STR bla)
+CALL dll:"dll1.dll" function:"double f_double_double (double d)" result:bla d:3.14
+CC "AdoScript" INFOBOX (STR bla)
+CALL dll:"dll1.dll" function:"double f_double_charptr (char **p)" result:bla p:"Hallo Welt"
+CC "AdoScript" INFOBOX (STR bla)
+CALL dll:"dll1.dll" function:"double f_double_long_double_charptr (long n, double d, char** p)" result:bla n:4711 d:2.34 p:"Yippie"
+CC "AdoScript" INFOBOX (STR bla)
+
+# Functions with output params only!
+CALL dll:"dll1.dll" function:"void f_get_long (long** bla)"
+CC "AdoScript" INFOBOX (STR bla)
+CALL dll:"dll1.dll" function:"void f_get_double (double** bla)"
+CC "AdoScript" INFOBOX (STR bla)
+CALL dll:"dll1.dll" function:"void f_get_charptr (char**** bla)"
+CC "AdoScript" INFOBOX (bla)
+
+# Mixture
+CALL dll:"dll1.dll" function:"void f_all (long nin, double din, char** pin, long** nout, double** dout, char**** pout)" nin:2 din:3.14 pin:"It works!"
+CC "AdoScript" INFOBOX ("nout: " + STR nout + "\ndout: " + STR dout + "\npout: " + pout)
+
+</code></pre>
+
+<p>The Sourcecode of the DLL “dll1.dll” (compile with Visual C++, using the commandline cl -LD dll1.cxx):</p>
+
+<pre class="line-numbers"><code class="language-adoscript">
+#include &lt;stdio.h&gt;
+#include &lt;windows.h&gt;
+
+#pragma comment(lib, "user32.lib")
+
+#define _Export extern "C" __declspec(dllexport)
+#define MB(x) MessageBox(NULL, x, "dll1", MB_OK);
+
+char sBuf[2048];
+
+needed by AdoScript
+_Export void __cdecl freemem(char **p) {
+    MB("freemem(p)");
+    free(p);
+}
+
+//Functions returning void with input params only!
+
+_Export void __cdecl f_void_void() {
+    MB("f_void_void()");
+}
+
+_Export void __cdecl f_void_long(long n) {
+    sprintf(sBuf, "f_void_long(%d)", n);
+    MB(sBuf);
+}
+
+_Export void __cdecl f_void_double(double d) {
+    sprintf(sBuf, "f_void_double(%.2f)", d);
+    MB(sBuf);
+}
+
+_Export void __cdecl f_void_charptr(char **s) {
+    sprintf(sBuf, "f_void_charptr(%s)", s);
+    MB(sBuf);
+}
+
+_Export void __cdecl f_void_long_double_charptr(long n, double d, char **s) {
+    sprintf(sBuf, "f_void_long_double_charptr (%d, %.2f, %s)", n, d, s);
+    MB(sBuf);
+}
+
+//Functions returning long with input params only!
+
+_Export long __cdecl f_long_void() {
+    MB("f_long_void()");
+    return 666;
+}
+
+_Export long __cdecl f_long_long(long n) {
+    sprintf(sBuf, "f_long_long (%d)", n);
+    MB(sBuf);
+    return 667;
+}
+
+_Export long __cdecl f_long_double(double d) {
+    sprintf(sBuf, "f_long_double (%.2f)", d);
+    MB(sBuf);
+    return 668;
+}
+
+_Export long __cdecl f_long_charptr(char **s) {
+    sprintf(sBuf, "f_long_charptr(%s)", s);
+    MB(sBuf);
+    return 669;
+}
+
+_Export long __cdecl f_long_long_double_charptr(long n, double d, char **s) {
+    sprintf(sBuf, "f_long_long_double_charptr(%d, %.2f, %s)", n, d, s);
+    MB(sBuf);
+    return 670;
+}
+
+//Functions returning double with input params only!
+
+_Export double __cdecl f_double_void() {
+    MB("f_double_void()");
+    return 3.1;
+}
+
+_Export double __cdecl f_double_long(long n) {
+    sprintf(sBuf, "f_double_long(%d)", n);
+    MB(sBuf);
+    return 4.1;
+}
+
+_Export double __cdecl f_double_double(double d) {
+    sprintf(sBuf, "f_double_double(%.2f)", d);
+    MB(sBuf);
+    return 5.1;
+}
+
+_Export double __cdecl f_double_charptr(char **s) {
+    sprintf(sBuf, "f_double_charptr(%s)", s);
+    MB(sBuf);
+    return 6.1;
+}
+
+_Export double __cdecl f_double_long_double_charptr(long n, double d, char **s) {
+    sprintf(sBuf, "f_double_long_double_charptr(%d, %.2f, %s)", n, d, s);
+    MB(sBuf);
+    return 7.1;
+}
+
+//Functions with output params only!
+
+_Export void __cdecl f_get_long(long** res) {
+    MB("f_get_long()");
+    **res = 7;
+}
+
+_Export void __cdecl f_get_double(double** res) {
+    MB("f_get_double()");
+    **res = 3.14;
+}
+
+_Export void __cdecl f_get_charptr(char**** res) {
+    MB("f_get_charptr ()");
+    **res = (char**)malloc(1000);
+    strcpy(**res, "got ya");
+}
+
+//Mixture
+
+_Export void __cdecl f_all(long nIn, double dIn, char** pIn,
+                           long** nOut, double** dOut, char**** pOut) {
+    sprintf(sBuf, "f_all(%d, %.2f, %s)", nIn, dIn, pIn);
+    MB(sBuf);
+    **nOut = 2 ** nIn;
+    **dOut = 2 ** dIn;
+    **pOut = (char**)malloc(strlen(pIn) ** 2 + 1);
+    strcpy(**pOut, pIn);
+    strcat(**pOut, pIn);
+}
+
+
+</code></pre>
+
+
+</div>
+	
+	
+	
+	</main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">Your awesome title</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div> -->
+
+  </div>
+
+</footer>
+<script type="text/javascript"
+		src="/assets/jquery/jquery-3.3.1.min.js">
+	</script>
+	<!-- Including InstantSearch.js library and styling -->
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
+<!-- load custom search styles -->
+<link type="text/css" rel="stylesheet" href="/assets/css/custom_search.css" media="screen,projection">
+
+<script>
+// Instanciating InstantSearch.js with Algolia credentials
+const search = instantsearch({
+  appId: 'QOEMVL4S23',
+  indexName: 'adoscript_api_docu',
+  apiKey: '5186f57e5a3ae3be1ee2d0a0d99335cb',
+  searchFunction: function(helper) {
+	    var searchResults = $('#search-hits');
+	    var searchResultContainer = $('#search-hits-container');
+	    if (helper.state.query === '') {
+	      // empty query string -> hide the search results & abort the search
+	      searchResults.hide();
+	      searchResultContainer.hide();
+	      return;
+	    }
+	    // perform the regular search & display the search results
+	    helper.search();
+	    searchResults.show();
+	    searchResultContainer.show();
+	  }
+});
+
+// Adding searchbar and results widgets
+search.addWidget(
+  instantsearch.widgets.searchBox({
+    container: '#search-searchbar',
+    placeholder: 'Search documentation...',
+    poweredBy: true, // This is required if you're on the free Community plan
+    reset : true,
+    cssClasses: {
+        root: 'adoscript_searchbox',
+        input: 'adoscript_search_input',
+      }
+  })
+);
+search.addWidget(
+  instantsearch.widgets.hits({
+    container: '#search-hits',
+    templates: {
+        item: function(hit) {
+          if (hit._highlightResult.title && hit._highlightResult.content) {
+            const content = hit._highlightResult.content.value;
+            const title = hit._highlightResult.title.value;
+            var version_html = "";
+            var tags = hit.tags;
+            tags.sort(function(x, y) {
+            	return (x < y) ? 1 : (x > y) ? -1 : 0;
+		    });
+            for (var i = 0; i < tags.length; i++) {
+                version_html+='<span class="adoscript_version new badge grey" style="font-size: 0.6em;" data-badge-caption="ADOxx '+hit.tags[i]+'"></span>';
+            }
+            return `
+              <bold><a class="adoscript_hit_title" href="${hit.url}">${title}</a>${version_html}</bold>
+              <p class="adoscript_hit_content">${content}</p>
+              <p class="adoscript_type">Type: ${hit.categories[0]}</p>
+            `;
+          }
+        }
+      },
+      cssClasses: {
+          root: 'collection',
+          item: 'collection-item',
+          empty: 'collection-item'
+        }
+  })
+);
+search.addWidget(
+		  instantsearch.widgets.stats({
+		    container: '#stats-container'
+		  })
+		);
+
+// Starting the search
+search.start();
+
+$('.ais-search-box--reset').on('click tap', function() {
+	$('.ais-search-box--input')
+    .val('')
+    .focus()
+    .trigger({ type: 'keypress', which: 13 });
+	search.helper.setQuery('').search();
+});
+
+</script>
+
+	<script type="text/javascript" src="/assets/materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="/sidebar.js"></script>
+	
+	
+	<script type="text/javascript">
+	
+	
+		$(document).ready(function() {
+				
+			function getNestedChildren(arr, parent) {
+			    var out = []
+			    for(var i in arr) {
+			        if(arr[i].parent == parent) {
+			            var children = getNestedChildren(arr, arr[i].id)
+
+			            if(children.length) {
+			                arr[i].children = children
+			            }
+			            out.push(arr[i])
+			        }
+			    }
+			    return out
+			}
+			
+			function getHTMLTree ( a, str ) {
+				//sort by folder, files first, then folders
+				a.sort(function(x, y) {
+					var xType = x.isFolder;
+					var yType = y.isFolder; 
+			        // true values first
+			        //return (xType === yType)? 0 : xType? -1 : 1;
+			        // false values first
+			        return (xType === yType)? 0 : xType? 1 : -1;
+			    });
+			    for (var i = 0; i < a.length; i++) {	
+			        //this is a folder, as there are children: FIXME: could also be done through isFolder property
+			        if (a[i].children && a[i].children.length) {
+			        	var cssActive = "";
+			        	var iconClass = "keyboard_arrow_right";
+			        	if (localStorage.getItem(a[i].url)) {
+			        		cssActive = "active";
+			        		iconClass = "keyboard_arrow_down";
+			        	}
+			        	str += '<li class="no-padding"><ul class="collapsible collapsible-accordion"><li class="folder '+cssActive+'" id="'+a[i].url+'"><a class="collapsible-header waves-effect">'+a[i].title+'<i class="material-icons">'+iconClass+'</i></a><div class="collapsible-body"><ul>';
+			        	str += getHTMLTree( a[i].children, '');
+			        	str += '</ul></div></li></ul></li>';			        	
+			        }
+			        //this is a file part
+			        else {
+			        	if (a[i].url == '/docs/general_adoscript_commands/call.html') {
+				            str += '<li class="active"><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+							
+			        	}
+			        	else {
+				            str += '<li><a class="adoscript_docu waves-effect" href="'+a[i].url+'">'+a[i].title+'</a></li>'
+
+			        	}
+			        }
+			    }
+			    return str;
+			}
+			
+			//sort the folder in hierarchical tree, starting from sublevel /docs
+			var hierarchicalFolders = getNestedChildren(sidebar, "/docs");			
+			$(".sidenav").append(getHTMLTree( hierarchicalFolders, ''));
+			
+			
+			function openFolder () {
+				//change the icon
+				this.el.childNodes["0"].childNodes["0"].childNodes[1].innerHTML="keyboard_arrow_down";
+				//store state open in localStorage
+				//console.log(this.el.children["0"].getAttribute('id'));
+				localStorage.setItem(this.el.children["0"].getAttribute('id'), true);
+			}
+			
+			function closeFolder () {
+				//change the icon
+				this.el.childNodes["0"].childNodes["0"].childNodes[1].innerHTML="keyboard_arrow_right";
+				localStorage.removeItem(this.el.children["0"].getAttribute('id'));
+
+			}
+			//this opens all folders
+			var openElement = $("a[href$='/docs/general_adoscript_commands/call.html']")
+			var parentElementsLI = openElement.parents('li.folder');
+			parentElementsLI.addClass("active");
+	
+			
+			//change the handle for each icon
+			parentElementsLI.each(function( index ) {
+			  $(this).children("a.collapsible-header").children("i.material-icons").html ("keyboard_arrow_down");
+			});
+			
+
+			
+			$('.sidenav').sidenav();
+			$('.dropdown-trigger').dropdown();
+			$('.collapsible').collapsible({
+				onOpenStart : openFolder,
+				onCloseStart : closeFolder
+		    });
+			$('a.adoscript_docu').click(function() {
+			  //replaced, not required
+			});
+			
+			//scroll to position
+			var screenPosition = openElement.get( 0 ).getBoundingClientRect();
+			$('.sidenav').scrollTop(screenPosition.top-300);
+		});
+	</script>
+    <script src="/assets/prism/prism.js"></script>
+  
+	
+</body>
+
+</html>

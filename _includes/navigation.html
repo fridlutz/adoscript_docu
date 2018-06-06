@@ -1,0 +1,14 @@
+{%- assign docs = site.docs  | sort: 'url' -%}
+{%- capture sidebar -%}
+  {%- for doc in docs -%}
+    {%- assign doc_url_parts = doc.url | split: '/' -%}
+    {%- assign doc_url_container = doc_url_parts | pop | join: '/' -%}
+    {%- assign doc_url_parent = doc_url_parts | pop | pop | join: '/' -%}    
+       
+    {%- assign doc_url_parts_size = doc_url_parts | size -%}
+    {% assign filename = doc_url_parts | last %}
+      { "title":"{{ doc.title | escape }}", "url":"{{ doc.url | escape }}", "isFolder":{%- if filename == "index.html" -%} true {%- else -%} false {%- endif -%}, "parent":"{%- if filename == "index.html" -%} {{ doc_url_parent}} {%- else -%} {{ doc_url_container}} {%- endif -%}", "id":"{%- if filename == "index.html" -%} {{ doc_url_container}} {%- else -%} {{ doc.url}} {%- endif -%}"}{%- if forloop.last == false -%},{%- endif -%}      
+  {%- endfor -%}
+{%- endcapture -%}
+{%- assign sidebar = sidebar -%}
+[{{ sidebar }}]

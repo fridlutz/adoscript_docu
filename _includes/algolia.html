@@ -1,0 +1,91 @@
+<!-- Including InstantSearch.js library and styling -->
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
+<!-- load custom search styles -->
+<link type="text/css" rel="stylesheet" href="{{ "/assets/css/custom_search.css" | relative_url }}" media="screen,projection">
+
+<script>
+// Instanciating InstantSearch.js with Algolia credentials
+const search = instantsearch({
+  appId: '{{ site.algolia.application_id }}',
+  indexName: '{{ site.algolia.index_name }}',
+  apiKey: '{{ site.algolia.search_only_api_key }}',
+  searchFunction: function(helper) {
+	    var searchResults = $('#search-hits');
+	    var searchResultContainer = $('#search-hits-container');
+	    if (helper.state.query === '') {
+	      // empty query string -> hide the search results & abort the search
+	      searchResults.hide();
+	      searchResultContainer.hide();
+	      return;
+	    }
+	    // perform the regular search & display the search results
+	    helper.search();
+	    searchResults.show();
+	    searchResultContainer.show();
+	  }
+});
+
+// Adding searchbar and results widgets
+search.addWidget(
+  instantsearch.widgets.searchBox({
+    container: '#search-searchbar',
+    placeholder: 'Search documentation...',
+    poweredBy: true, // This is required if you're on the free Community plan
+    reset : true,
+    cssClasses: {
+        root: 'adoscript_searchbox',
+        input: 'adoscript_search_input',
+      }
+  })
+);
+search.addWidget(
+  instantsearch.widgets.hits({
+    container: '#search-hits',
+    templates: {
+        item: function(hit) {
+          if (hit._highlightResult.title && hit._highlightResult.content) {
+            const content = hit._highlightResult.content.value;
+            const title = hit._highlightResult.title.value;
+            var version_html = "";
+            var tags = hit.tags;
+            tags.sort(function(x, y) {
+            	return (x < y) ? 1 : (x > y) ? -1 : 0;
+		    });
+            for (var i = 0; i < tags.length; i++) {
+                version_html+='<span class="adoscript_version new badge grey" style="font-size: 0.6em;" data-badge-caption="ADOxx '+hit.tags[i]+'"></span>';
+            }
+            return `
+              <bold><a class="adoscript_hit_title" href="{{ site.baseurl }}${hit.url}">${title}</a>${version_html}</bold>
+              <p class="adoscript_hit_content">${content}</p>
+              <p class="adoscript_type">Type: ${hit.categories[0]}</p>
+            `;
+          }
+        }
+      },
+      cssClasses: {
+          root: 'collection',
+          item: 'collection-item',
+          empty: 'collection-item'
+        }
+  })
+);
+search.addWidget(
+		  instantsearch.widgets.stats({
+		    container: '#stats-container'
+		  })
+		);
+
+// Starting the search
+search.start();
+
+$('.ais-search-box--reset').on('click tap', function() {
+	$('.ais-search-box--input')
+    .val('')
+    .focus()
+    .trigger({ type: 'keypress', which: 13 });
+	search.helper.setQuery('').search();
+});
+
+</script>
